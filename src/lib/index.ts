@@ -1,16 +1,19 @@
 import { faker } from '@faker-js/faker';
+import { unstable_cache } from 'next/cache';
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-const getListUsers = async () => {
-  console.log('getListUsers call');
+const getPostCache = unstable_cache(async () => {
   await delay(5000);
-  console.log('getListUsers done');
-  return [
-    { id: 1, name: faker.person.fullName() },
-    { id: 2, name: faker.person.fullName() },
-    { id: 3, name: faker.person.fullName() },
-  ];
+  return {
+    title: faker.lorem.sentence(),
+    content: faker.lorem.paragraph(),
+  }
+}, ['posts'], { revalidate: 10, tags: ['posts'] });
+
+
+const getListComments = async () => {
+  return Array.from({ length: 10 }, () => faker.lorem.sentence());
 };
 
-export { getListUsers };
+export { getPostCache, getListComments };

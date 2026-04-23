@@ -1,12 +1,19 @@
-import { getListUsers } from "@/lib";
+import { getListComments, getPostCache } from "@/lib";
+import { cookies } from "next/headers";
 
 export default async function Home() {
-  const users = await getListUsers();
+  await cookies();
+  const posts = await getPostCache();
+  const comments = await getListComments();
   return <div>
     <h1>List users</h1>
+    <h2>Posts</h2>
+    <p>{posts.title}</p>
+    <p>{posts.content}</p>
+    <h2>Comments</h2>
     <ul>
-      {users.map((user) => (
-        <li key={user.id}>{user.name}</li>
+      {comments.map((comment) => (
+        <li key={comment}>{comment}</li>
       ))}
     </ul>
   </div>;
