@@ -1,17 +1,19 @@
-import { getPost, getListComments } from "@/lib";
+import React from 'react'
 
-export const revalidate = 10;
-
-export default async function Home() {
-  const posts = await getPost();
-  const comments = await getListComments();
-  return <div>
-    <h1>Posts: {posts.title}</h1>
-    <p>Content: {posts.content}</p>
+const page = () => {
+  return (
     <ul>
-      {comments.map((comment) => (
-        <li key={comment}>{comment}</li>
-      ))}
+      <li>
+        <a href="/post/1">Post 1</a>
+      </li>
+      <li>
+        <a href="/post/2">Post 2</a>
+      </li>
+      <li>
+        <a href="/post/3">Post 3</a>
+      </li>
     </ul>
-  </div>;
+  )
 }
+
+export default page
