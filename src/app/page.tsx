@@ -1,10 +1,13 @@
+import { getListUsers } from "@/lib";
+
 export default async function Home() {
-  console.log('call api posts');
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts/1');
-  const post = await res.json();
-  console.log('call api posts - done');
+  const users = await getListUsers();
   return <div>
-    <h1>Post title: {post.title}</h1>
-    <p>Post content: {post.body}</p>
+    <h1>List users</h1>
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
   </div>;
 }
