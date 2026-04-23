@@ -6,8 +6,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <h1>Blog học next và react</h1>
-        <div>{children}</div>
+        {children}
       </body>
     </html>
   );
