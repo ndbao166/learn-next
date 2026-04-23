@@ -1,27 +1,17 @@
+import { getPost } from "@/lib";
 import { cookies } from "next/headers";
+import SlowComponent from "@/components/SlowComponent";
+import { Suspense } from "react";
 
 export default async function Home() {
-  await cookies();
-
-  const posts = await fetch('http://localhost:8080/api/post', { cache: 'force-cache', next: { revalidate: 10 } });
-  const postsData = await posts.json();
-
-  const comments = await fetch('http://localhost:8080/api/comment');
-  const commentsData = await comments.json();
-
+  // await cookies(); test ở production
+  const posts = await getPost();
   return <div>
-    <h1>List users</h1>
-
-    <h2>Posts</h2>
-    <p>{postsData.title}</p>
-    <p>{postsData.content}</p>
-
-    <h2>Comments</h2>
-    <ul>
-      {commentsData.map((comment: string) => (
-        <li key={comment}>{comment}</li>
-      ))}
-    </ul>
-    
+    <h1>Posts</h1>
+    <p>{posts.title}</p>
+    <p>{posts.content}</p>
+    <Suspense fallback={<div>Loading...</div>}>
+      <SlowComponent />
+    </Suspense>
   </div>;
 }
