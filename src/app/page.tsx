@@ -1,13 +1,16 @@
-import { getListUsers } from "@/lib";
+import React from 'react'
 
-export default async function Home() {
-  const users = await getListUsers();
-  return <div>
-    <h1>List users</h1>
-    <ul>
-      {users.map((user) => (
-        <li key={user.id}>{user.name}</li>
-      ))}
-    </ul>
-  </div>;
+const page = () => {
+  return (
+    <>
+        <div>user list</div>
+        <ul>
+            <li><a href="/user/1">User 1</a></li>
+            <li><a href="/user/2">User 2</a></li>
+            <li><a href="/user/3">User 3</a></li>
+        </ul>
+    </>
+  )
 }
+
+export default page
