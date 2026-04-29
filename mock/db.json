@@ -1,21 +1,8 @@
 {
   "todo": [
     {
-      "title": "a",
-      "id": "1-FAzBGLqBA"
-    },
-    {
-      "title": "a",
-      "id": "TatayEiUrQw"
-    },
-    {
-      "title": "a",
-      "id": "a-ltOiIAvho"
-    },
-    {
-      "title": "a",
-      "id": "VertdGZ4Yv0"
+      "id": "2jjug90a523fbccq4jiop8",
+      "title": "ád"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

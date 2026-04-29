@@ -1,69 +1,78 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+
 interface Todo {
-    id: number
-    title: string
-    completed: boolean
+  id: number
+  title: string
 }
+
 const page = () => {
-    const [title, setTitle] = useState('')
+  const [title, setTitle] = useState('')
 
-    const [todos, setTodos] = useState<Todo[]>([])
+  const [todos, setTodos] = useState<Todo[]>([])
 
-    const [message, setMessage] = useState<string | null>(null)
-    const [loading, setLoading] = useState<boolean>(false)
-    
-    const fetchTodos = async () => {
-        await new Promise(resolve => setTimeout(resolve, 10000))
-        const res = await fetch('http://localhost:4000/todo')
-        const data = await res.json()
-        setTodos(data)
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const fetchTodos = async () => {
+    const res = await fetch('api/')
+    const data = await res.json()
+    if (!res.ok) {
+      throw new Error(data.message || 'failed to fetch todos from server')
     }
+    return data
+  }
 
-    useEffect(() => {
-        const loadTodos = async () => {
-            try {
-                setLoading(true)
-                await fetchTodos()
-            } catch (error) {
-                setMessage((error as Error).message)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        loadTodos()
-    }, [])
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setLoading(true)
-        setMessage('')
-
-        try {
-            await new Promise(resolve => setTimeout(resolve, 10000))
-            const res = await fetch('http://localhost:4000/todo', {
-                method: 'POST',
-                body: JSON.stringify({ title }),
-            })
-            const result = await res.json()
-
-            if (!res.ok) {
-                throw new Error(result.message || 'Something went wrong')
-            }
-            
-            setTitle('')
-            setMessage('Todo added successfully')
-
-            // fetch todos again
-            await fetchTodos()
-        } catch (error) {
-            setMessage((error as Error).message)
-        } finally {
-            setLoading(false)
-        }
+  const postTodo = async (title: string) => {
+    const res = await fetch('/api/', {
+      method: 'POST',
+      body: JSON.stringify({ title: title.trim() }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await res.json()
+    if (!res.ok) {
+      throw new Error(data.message || 'failed to post todo to server')
     }
+  }
+
+  const loadTodos = async () => {
+    setLoading(true)
+
+    try {
+      const data = await fetchTodos()
+      setTodos(data)
+    } catch (error) {
+      setError((error as Error).message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // load todos when the component mounts
+  useEffect(() => {
+    loadTodos()
+  }, [])
+
+
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setLoading(true)
+
+    try {
+      await postTodo(title)
+
+      setTitle('')
+      await loadTodos()
+    } catch (error) {
+      setError((error as Error).message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
@@ -84,22 +93,17 @@ const page = () => {
           {loading ? 'Loading...' : 'Add'}
         </button>
       </form>
-      {message && (
-        <p className={`mb-4 text-sm text-center ${message.includes('success') ? 'text-green-600' : 'text-red-600'}`}>
-          {message}
-        </p>
-      )}
+      {error && <p className="text-center text-red-500 font-bold">{error}</p>}
       {loading ? (
         <p className="text-center text-gray-500">Loading todos...</p>
-      ) : (
-        <ul className="space-y-2">
-          {todos.map(todo => (
-            <li key={todo.id} className="px-4 py-2 bg-gray-100 rounded shadow-sm">
-              {todo.title}
-            </li>
-          ))}
-        </ul>
-      )}
+      ) : ""}
+      <ul className="space-y-2">
+        {todos.map(todo => (
+          <li key={todo.id} className="px-4 py-2 bg-gray-100 rounded shadow-sm">
+            {todo.title}
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

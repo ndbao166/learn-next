@@ -1,12 +1,8 @@
-import React from 'react'
+import Link from 'next/link'
 
 const page = () => {
   return (
     <div>
-      <ul>
-        <li><a href="/react">React.js</a></li>
-        <li><a href="/next">Next.js</a></li>
-      </ul>
     </div>
   )
 }
