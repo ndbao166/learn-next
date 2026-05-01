@@ -1,12 +1,15 @@
 import React from 'react'
 
 const page = async () => {
-  const name = await fetch('http://localhost:3001/lesson/9-data-cache/api/name', {
+  const name = await fetch('https://randomuser.me/api', {
     next: {
       revalidate: 30,
     },
   });
-  const number = await fetch('http://localhost:3001/lesson/9-data-cache/api/number', {
+  const number = await fetch('https://api.api-ninjas.com/v2/randomquotes?categories=success,wisdom', {
+    headers: {
+      'X-Api-Key': "mJBuDR9bq0St5dQybKgSrsgIZsXKJd6qQ08nXsN6",
+    },
     next: {
       revalidate: 60,
     },
@@ -15,8 +18,8 @@ const page = async () => {
   const numberData = await number.json();
   return (
     <div>
-      <h1>{nameData.name}</h1>
-      <h1>{numberData.number}</h1>
+      <h1>{nameData.results[0].name.first}</h1>
+      <h1>{numberData[0].quote}</h1>
     </div>
   )
 }
