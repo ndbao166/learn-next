@@ -1,1 +1,165 @@
 @import 'tailwindcss';
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --muted: #64748b;
+  --layout-border: #2563eb;
+  --home-border: #16a34a;
+  --ssg-border: #9333ea;
+  --ssr-border: #ea580c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.layout-boundary {
+  min-height: 100vh;
+  margin: 24px;
+  padding: 18px;
+  border: 4px solid var(--layout-border);
+  border-radius: 24px;
+  background: #dbeafe;
+  position: relative;
+}
+
+.boundary-label {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #0f172a;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding: 18px;
+  border: 2px dashed var(--layout-border);
+  border-radius: 18px;
+  background: white;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.site-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.site-header a {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: var(--layout-border);
+  font-weight: 700;
+}
+
+.page-slot {
+  padding: 18px;
+  border: 3px dashed #1d4ed8;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.page-boundary {
+  padding: 20px;
+  border: 4px solid;
+  border-radius: 20px;
+  background: white;
+}
+
+.page-boundary h2,
+.page-boundary h3,
+.page-boundary p {
+  margin-top: 0;
+}
+
+.page-home {
+  border-color: var(--home-border);
+  background: #f0fdf4;
+}
+
+.page-ssg {
+  border-color: var(--ssg-border);
+  background: #faf5ff;
+}
+
+.page-ssr {
+  border-color: var(--ssr-border);
+  background: #fff7ed;
+}
+
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.data-card,
+.profile-card {
+  padding: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.profile-avatar {
+  display: grid;
+  width: 72px;
+  height: 72px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ssr-border);
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+@media (max-width: 640px) {
+  .layout-boundary {
+    margin: 12px;
+    padding: 12px;
+  }
+
+  .site-header,
+  .profile-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

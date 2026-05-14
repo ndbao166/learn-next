@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import './globals.css';
+import Link from 'next/link';
 
 export default function RootLayout({
   children,
@@ -9,12 +9,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ul>
-          <li><Link href="/">Home</Link></li>
-        <li><Link href="/react">React.js</Link></li>
-        <li><Link href="/next">Next.js</Link></li>
-        </ul>
-        {children}
+        <div className="layout-boundary">
+          <div className="boundary-label">Root Layout: src/app/layout.tsx</div>
+          <header className="site-header">
+            <h1>Learn Next.js</h1>
+            <nav>
+              <Link href="/">Home</Link>
+              <Link href="/ssg">SSG</Link>
+              <Link href="/ssr">SSR</Link>
+            </nav>
+          </header>
+          <main className="page-slot">{children}</main>
+        </div>
       </body>
     </html>
   );
