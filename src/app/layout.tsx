@@ -15,8 +15,8 @@ export default function RootLayout({
             <h1>Learn Next.js</h1>
             <nav>
               <Link href="/">Home</Link>
-              <Link href="/ssg">SSG</Link>
-              <Link href="/ssr">SSR</Link>
+              <Link href="/ssg" prefetch={false}>SSG</Link>
+              <Link href="/ssr" prefetch={true}>SSR</Link>
             </nav>
           </header>
           <main className="page-slot">{children}</main>

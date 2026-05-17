@@ -16,6 +16,9 @@ type RandomUserResponse = {
   results: RandomUser[]
 }
 
+
+export const dynamic = 'force-dynamic'
+
 const Page = async () => {
   const data = await fetch('https://randomuser.me/api/')
   const userData: RandomUserResponse = await data.json()
@@ -47,4 +50,3 @@ const Page = async () => {
 }
 
 export default Page
-export const dynamic = 'force-dynamic'
